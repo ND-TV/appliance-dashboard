@@ -1,0 +1,19 @@
+name: 'Auto PR on Push'
+on:
+  push:
+    branches:
+      - 'f/**' # Под это правило попадают все feature ветки
+
+jobs:
+  createPullRequest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "main"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_reviewer: "daniilboyarinkov"
+          pr_draft: true
