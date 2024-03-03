@@ -1,0 +1,22 @@
+name: Create Pull Request on Push
+on:
+  push:
+    branches:
+      - 'f/**'
+
+jobs:
+  create_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "main"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_title: "New Feature"
+          pr_body: "Please review the new features"
+          pr_reviewer: "daniilboyarinkov"
+          pr_label: "enhancements"
