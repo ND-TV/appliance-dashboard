@@ -1,6 +1,6 @@
 export const enum ApplianceCategory {
-  CATEGORY_1 = 'category_1',
-  CATEGORY_2 = 'category_2',
+  // CATEGORY_1 = 'category_1',
+  // CATEGORY_2 = 'category_2',
 }
 
 export interface Appliance {
