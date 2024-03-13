@@ -1,6 +1,8 @@
 export const enum ApplianceCategory {
-  // CATEGORY_1 = 'category_1',
-  // CATEGORY_2 = 'category_2',
+  /* eslint-disable no-unused-vars */
+  CATEGORY_1 = 'category_1',
+  /* eslint-disable no-unused-vars */
+  CATEGORY_2 = 'category_2',
 }
 
 export interface Appliance {
