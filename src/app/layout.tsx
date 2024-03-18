@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import NavigationLinks from '@/ui/NavigationLinks';
+import Navbar from "./core/components/navbar";
 
 const inter = Inter({ subsets: ["cyrillic"] });
 
@@ -17,10 +17,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={inter.className}>
-        <nav className="flex gap-4 p-8">
-          <NavigationLinks />
-        </nav>
+      <body className={`${inter.className} flex flex-col min-h-screen`}>
+        <Navbar />
         {children}
       </body>
     </html>

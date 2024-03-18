@@ -11,7 +11,7 @@ interface NavigationLink {
 
 const links: NavigationLink[] = [
   {
-    name: "Главная",
+    name: "Календарь",
     href: "/",
   },
   {
@@ -30,9 +30,10 @@ export default function NavigationLinks() {
                 key={link.name}
                 href={link.href}
                 className={clsx(
-                    {
-                      'text-red-500': pathname === link.href,
-                    },
+                  "text-blue-500",
+                  {
+                    'text-yellow-500': pathname === link.href,
+                  }
                 )}
             >
               <p>{link.name}</p>
