@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./core/components/navbar";
+import Navbar from "@/components/navbar";
 
 const inter = Inter({ subsets: ["cyrillic"] });
 
@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${inter.className} flex flex-col min-h-screen`}>
+      <body className={`${inter.className} flex flex-col w-full max-w-full mx-auto items-center gap-y-28`}>
         <Navbar />
         {children}
       </body>

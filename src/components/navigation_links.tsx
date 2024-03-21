@@ -30,7 +30,7 @@ export default function NavigationLinks() {
                 key={link.name}
                 href={link.href}
                 className={clsx(
-                  "text-blue-500",
+                  "text-blue-500 flex items-center justify-center",
                   {
                     'text-yellow-500': pathname === link.href,
                   }
