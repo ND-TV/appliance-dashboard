@@ -3,7 +3,22 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Appliance {
+  id          Int     @id @default(autoincrement())
+  days_worked Int
+  price       Decimal
+  days_rent   Int
+  type        String
+}
+
+model Agreement {
+  id            Int      @id @default(autoincrement())
+  appliances_id Int[]
+  start_date    DateTime
+  end_date      DateTime
 }
