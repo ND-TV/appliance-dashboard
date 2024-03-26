@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${inter.className} flex flex-col w-full max-w-full mx-auto items-center gap-y-28`}>
+      <body className={`${inter.className} flex flex-col w-full h-dvh max-w-full mx-auto items-center gap-y-28`}>
         <Navbar />
         {children}
       </body>
