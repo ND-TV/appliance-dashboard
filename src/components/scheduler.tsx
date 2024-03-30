@@ -22,6 +22,7 @@ export default function SchedulerComponent() {
       setSelectedItem({
         id: item.id,
         type: item.label.title,
+        subtitle: item.label.subtitle,
       });
     };
 
@@ -30,16 +31,16 @@ export default function SchedulerComponent() {
         id: item.id,
         startDate: item.startDate,
         endDate: item.endDate,
-        // Добавьте другие свойства, которые хотите передать в InfoModal
+        description: item.description
       });
     };
     
-    const handleCloseModal2 = () => {
-      setSelectedTile(null);
+    const handleCloseItemModal = () => {
+      setSelectedItem(null);
     };
 
-    const handleCloseModal = () => {
-      setSelectedItem(null);
+    const handleCloseTileModal = () => {
+      setSelectedTile(null);
     };
 
     return(
@@ -64,9 +65,6 @@ export default function SchedulerComponent() {
           setFilterButtonState(0)
         }}
 
-        
-     
-        
         config={{
           /* 
             change filter button state based on your filters
@@ -76,7 +74,7 @@ export default function SchedulerComponent() {
           */
           filterButtonState,
           // decide start zoom variant (0 - weeks, 1 - days)
-          zoom: 0,
+          zoom: 1,
           // select language for scheduler
           lang: "en",
           // decide how many resources show per one page
@@ -84,24 +82,10 @@ export default function SchedulerComponent() {
           
         }}
         />
-
-        {selectedItem && (
-                    <InfoModal onClose={handleCloseModal} objectInfo={selectedItem}>
-                      {/* Добавьте другие данные, которые вы хотите отобразить в модальном окне */}
-                    </InfoModal>
-                  )}
-        
-        {selectedTile && (
-                    <InfoModal onClose={handleCloseModal2} objectInfo={selectedItem}>
-                      {/* Добавьте другие данные, которые вы хотите отобразить в модальном окне */}
-                    </InfoModal>
-                  )}
+        {selectedTile && (<InfoModal onClose={handleCloseTileModal} objectInfo={selectedItem} />)}
+        {selectedItem && (<InfoModal onClose={handleCloseItemModal} objectInfo={selectedItem} />)}
       </>
-        
-
     );
-
-
 };
 
 const mockedSchedulerData: SchedulerData = [
@@ -115,8 +99,8 @@ const mockedSchedulerData: SchedulerData = [
       data: [
         {
           id: "1",
-          startDate: new Date("2024-03-20T15:31:24.272Z"),
-          endDate: new Date("2024-03-28T10:28:22.649Z"),
+          startDate: new Date("2024-03-28T15:31:24.272Z"),
+          endDate: new Date("2024-04-04T10:28:22.649Z"),
           title: "Леха",
           occupancy: 3600,
           description: "Описание",
@@ -124,8 +108,8 @@ const mockedSchedulerData: SchedulerData = [
         },
         {
           id: "2",
-          startDate: new Date("2024-03-20T15:31:24.272Z"),
-          endDate: new Date("2024-03-28T10:28:22.649Z"),
+          startDate: new Date("2024-03-28T15:31:24.272Z"),
+          endDate: new Date("2024-04-05T10:28:22.649Z"),
           title: "Саня",
           occupancy: 3600,
           description: "Описание",
@@ -133,8 +117,8 @@ const mockedSchedulerData: SchedulerData = [
         },
         {
           id: "3",
-          startDate: new Date("2024-03-20T15:31:24.272Z"),
-          endDate: new Date("2024-03-28T10:28:22.649Z"),
+          startDate: new Date("2024-03-28T15:31:24.272Z"),
+          endDate: new Date("2024-04-10T10:28:22.649Z"),
           title: "Никич",
           occupancy: 3600,
           description: "Описание",

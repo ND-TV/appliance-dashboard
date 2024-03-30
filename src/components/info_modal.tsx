@@ -7,6 +7,8 @@ interface InfoModalProps {
         type?: string;
         startDate?: any;
         endDate?: any;
+        subtitle?: any;
+        description?: any;
     };
   }
 
@@ -17,22 +19,16 @@ export default function InfoModal(props: InfoModalProps) {
         <dialog className="fixed w-[380px] p-2 inset-0 z-50 overflow-auto rounded-lg bg-opacity-50 flex items-center justify-center">
             <form className="bg-white rounded-lg p-4 w-full">
                 <div className="flex justify-between items-center pb-2">
-                    <h2 className=" text-2xl font-bold flex-1">Информация:</h2>
-                    <button type="button"
-                    className="block bg-gray-800 hover:bg-gray-700 text-white font-bold rounded"
-                    onClick={props.onClose}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+                    <h2 className=" text-2xl font-bold flex-1">Информация</h2>
                 </div>
-                <div className='border-y-2 divide-solid border-slate-800 py-2'>
+                <div className='py-2'>
                     <div className='mb-2'>
-                        <h3 className="text-lg font-semibold">{props.objectInfo.id}</h3>
-                        <p>{props.objectInfo.type}</p>
-                        {/* Проверяем наличие дополнительных полей и выводим их, если они есть */}
+                        {/* Проверяем наличие полей и выводим их, если они есть */}
+                        {props.objectInfo.type && <p>{props.objectInfo.type}</p>}
                         {props.objectInfo.startDate && <p>Начало: {props.objectInfo.startDate.toLocaleDateString()}</p>}
                         {props.objectInfo.endDate && <p>Окончание: {props.objectInfo.endDate.toLocaleDateString()}</p>}
+                        {props.objectInfo.subtitle && <p>{props.objectInfo.subtitle}</p>}
+                        {props.objectInfo.description && <p>Описание: {props.objectInfo.description}</p>}
                     </div>
                 </div>
                 
