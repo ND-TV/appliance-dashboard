@@ -1,22 +1,32 @@
-import { sql } from "@vercel/postgres";
+'use client';
 
-export default async function Home() {
-  const {rows} = await sql`SELECT * FROM Appliances`;
+import AddRentModal from '@/components/modals/add_rent_modal';
+import {
+  Button,
+  useDisclosure,
+} from '@nextui-org/react';
+
+import './page.css';
+
+export default function Home() {
+  const {onOpen, isOpen, onClose} = useDisclosure();
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Главная!</h1>
-      <section>
-        <h2 className="text-red-500">Оборудование</h2>
-        <div>
-          {rows.map((row: any) => (
-          <div className='flex gap-20' key={row.id}>
-            <div>{row.id}</div>
-            <div>{row.type}</div>
-            <div>{row.price}</div>
-          </div>
-      ))}
-    </div>
-      </section>
+    <main className="main-container px-2 sm:px-6 lg:px-8">
+      <div className="w-full h-full bg-gray-400 rounded-lg grid place-items-center">
+        Календарь
+      </div>
+      <Button
+        className="justify-self-end text-white"
+        color="success"
+        onPress={onOpen}
+      >
+        Добавить аренду
+      </Button>
+      <AddRentModal
+        isOpen={isOpen}
+        onClose={onClose}
+      />
     </main>
   );
 }
