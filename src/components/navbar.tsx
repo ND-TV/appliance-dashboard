@@ -1,17 +1,51 @@
-import React from 'react';
-import NavigationLinks from '@/components/navigation_links';
+'use client';
 
-export default function Navbar() {
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+} from '@nextui-org/react';
+import Link from 'next/link';
+import {usePathname} from 'next/navigation';
+import React from 'react';
+
+interface NavigationLink {
+  name: string,
+  href: string,
+}
+
+const links: NavigationLink[] = [
+  {
+    name: 'Календарь',
+    href: '/',
+  },
+  {
+    name: 'Окупаемость',
+    href: '/payback',
+  },
+];
+
+export default function Header() {
+  const pathname = usePathname();
+
   return (
-    <nav className="bg-gray-800 w-full">
-        <div className='w-4/5 h-14 mx-auto px-2 flex flex-grow gap-x-[216px] sm:px-6 lg:px-8'>
-            <div className="bg-blue-700 w-48 flex items-center justify-center">
-                <span className="text-white font-bold text-3xl">ND-TV</span>
-            </div>
-            <div className="flex gap-x-4 basis-3/4">
-                    <NavigationLinks />
-            </div>
-        </div>
-    </nav>
+    <Navbar>
+      <NavbarBrand>
+        <p className="font-bold text-inherit">ND-TV</p>
+      </NavbarBrand>
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        {links.map((link, linkIndex) => (
+          <NavbarItem
+            key={`nav-link-${linkIndex}`}
+            isActive={pathname === link.href}
+          >
+            <Link color="foreground" href={link.href}>
+              {link.name}
+            </Link>
+          </NavbarItem>
+        ))}
+      </NavbarContent>
+    </Navbar>
   );
 }

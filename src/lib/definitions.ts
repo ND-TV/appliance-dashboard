@@ -7,6 +7,8 @@ export const enum ApplianceCategory {
 
 export interface Appliance {
   id: number,
+  /* Appliance name. */
+  title: string,
   /* Number of days appliance was in use. */
   daysWorked: number,
   /* The price that appliance was purchased by us. */

@@ -1,34 +1,32 @@
 'use client';
-import Filter from '@/components/filter';
-import { useState } from 'react';
-import SchedulerComponent from '@/components/scheduler';
-import AddRentModal from '@/components/add_rent_modal';
+
+import AddRentModal from '@/components/modals/add_rent_modal';
+import {
+  Button,
+  useDisclosure,
+} from '@nextui-org/react';
+
+import './page.css';
 
 export default function Home() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
+  const {onOpen, isOpen, onClose} = useDisclosure();
 
   return (
-    <main className="w-4/5 px-2 sm:px-6 lg:px-8 ">
-      <div className="flex-grow gap-x-20 flex h-[600px]">
-        <Filter />
-        <div className="flex-grow bg-gray-800">
-          <div className="w-[1011px]">
-            <div className='relative w-full h-[600px]'>
-              <SchedulerComponent />
-            </div>
-            <button className="bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white font-bold py-2 px-4 rounded"
-              onClick={toggleModal}>
-                Добавить
-            </button>
-          </div>
-          
-        </div>
+    <main className="main-container px-2 sm:px-6 lg:px-8">
+      <div className="w-full h-full bg-gray-400 rounded-lg grid place-items-center">
+        Календарь
       </div>
-      {isModalOpen && <AddRentModal onClose={toggleModal} />}
+      <Button
+        className="justify-self-end text-white"
+        color="success"
+        onPress={onOpen}
+      >
+        Добавить аренду
+      </Button>
+      <AddRentModal
+        isOpen={isOpen}
+        onClose={onClose}
+      />
     </main>
   );
 }

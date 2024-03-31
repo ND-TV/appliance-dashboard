@@ -8,22 +8,30 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 25, 25, 25;
-    --background-end-rgb: 25, 25, 25;
-  }
-}
-
-body {
+html, body, main {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  background-color: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    ;
 }
 
 @layer utilities {}
+
+.dialog {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: black;
+
+  background: transparent;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+
+  background-color: rgba(0, 0, 0, 0.8);
+}
