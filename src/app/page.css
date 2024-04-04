@@ -2,6 +2,47 @@
   display: grid;
   grid-template-rows: 1fr auto;
   row-gap: 24px;
-  place-items: center;
   min-height: calc(100dvh - 80px);
+}
+
+#calendar {
+  display: grid;
+  column-gap: 24px;
+  grid-template-columns: 240px 1fr;
+}
+
+#calendar .appliance-list {
+  display: block;
+  flex-grow: 1;
+
+  border: 1px solid lightgray;
+  border-radius: 8px;
+}
+
+#calendar > .appliances > h1 {
+  font-size: 1.2em;
+  height: 42px;
+  margin-bottom: 24px;
+}
+
+#calendar > .appliances {
+  display: flex;
+  flex-direction: column;
+}
+
+#calendar .appliance-list {
+  display: block;
+
+  border: 1px solid lightgray;
+  border-radius: 8px;
+}
+
+@media (max-width: 1024px) {
+  #calendar {
+    grid-template-areas: "calendar";
+  }
+
+  #calendar .appliance-list {
+    display: none;
+  }
 }
