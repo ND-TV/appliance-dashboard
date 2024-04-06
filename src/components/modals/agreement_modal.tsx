@@ -1,7 +1,19 @@
 'use client';
 
-import {Appliance} from '@/lib/definitions';
-import {mockAppliances} from '@/lib/mock/appliances';
+import {
+  Agreement,
+  Appliance,
+} from '@/lib/definitions';
+import {activeAgreement} from '@/lib/effects/active_agreement';
+import {
+  addAgreement,
+  updateAgreement,
+} from '@/lib/effects/agreements';
+import {appliances} from '@/lib/effects/appliances';
+import {
+  newAgreement,
+  newAppliance,
+} from '@/lib/mock';
 import {Input} from '@nextui-org/input';
 import {
   Modal,
@@ -16,75 +28,79 @@ import {
   AutocompleteItem,
   Button,
 } from '@nextui-org/react';
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import {useUnit} from 'effector-react';
+import React, {useEffect} from 'react';
 import {
   Controller,
   SubmitHandler,
   useFieldArray,
   useForm,
 } from 'react-hook-form';
-import { IoAddOutline as Plus } from 'react-icons/io5';
-import { IoTrashOutline as Delete } from 'react-icons/io5';
+import {
+  IoAddOutline as Plus,
+  IoTrashOutline as Delete,
+} from 'react-icons/io5';
 
-type AddRentModalProps = Omit<ModalProps, 'children'>;
+type AgreementModalProps = Omit<ModalProps, 'children'>;
 
 const MAX_APPLIANCE_QUANTITY = 6;
 
-type ApplianceField = Pick<Appliance, 'title'>;
-
-interface IFormInput {
-  startDate: string;
-  endDate: string;
-  appliance: ApplianceField[],
-}
-
-export default function AddRentModal(props: AddRentModalProps) {
-  const [appliances, setAppliances] = useState<Appliance[]>([]);
+export default function AgreementModal(props: AgreementModalProps) {
+  const appliancesList = useUnit(appliances);
+  const currentAgreement = useUnit(activeAgreement);
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<IFormInput>();
+  } = useForm<Agreement>({
+    defaultValues: newAgreement,
+  });
+
   const {
     fields: applianceFields,
     append: addAppliance,
     remove: removeAppliance,
   } = useFieldArray({
     control,
-    name: 'appliance',
+    name: 'appliances',
   });
-  const onSubmit: SubmitHandler<IFormInput> = (data) => alert(JSON.stringify(data));
 
-  useEffect(() => {
-    // Fetch appliances.
-    setAppliances(mockAppliances);
-  }, []);
+  const onSubmit: SubmitHandler<Agreement> = (agreement) => {
+    currentAgreement ?
+      updateAgreement(agreement) :
+      addAgreement(agreement);
 
-  const handleApplianceAdd = () => {
-    addAppliance({
-      title: '',
-    });
+    const hasError = Object.keys(errors).length;
+    if (!hasError) {
+      props.onClose?.();
+    }
   };
 
+  const handleApplianceAdd = () => {
+    addAppliance(newAppliance);
+  };
+
+  useEffect(() => {
+    reset(currentAgreement ?? newAgreement);
+  }, [currentAgreement, reset]);
+
   const renderApplianceFields =
-      (applianceField: ApplianceField & {id: string}, applianceFieldIndex: number) => {
+      (appliance: Appliance, applianceIndex: number) => {
         return (
-          <div className="flex gap-1" key={applianceField.id}>
+          <div className="flex gap-1" key={appliance.id}>
             <Controller
               control={control}
-              name={`appliance.${applianceFieldIndex}.title`}
-              render={({ field: { onChange, value } }) => (
+              name={`appliances.${applianceIndex}.title`}
+              render={({ field: { onChange, value} }) => (
                 <Autocomplete
                   label="Выберите оборудование"
                   onInputChange={onChange}
                   inputValue={value}
                   allowsCustomValue
                 >
-                  {appliances.map((appliance) => (
+                  {appliancesList.map((appliance) => (
                     <AutocompleteItem key={appliance.id} value={appliance.title}>
                       {appliance.title}
                     </AutocompleteItem>
@@ -95,7 +111,7 @@ export default function AddRentModal(props: AddRentModalProps) {
             <Button
               color="danger"
               variant="light"
-              onClick={() => removeAppliance(applianceFieldIndex)}
+              onClick={() => removeAppliance(applianceIndex)}
               className="min-w-[56px] min-h-[56px] text-[#ccc] hover:text-[#fff] transition-colors"
               size="lg"
               aria-label="Remove appliance"
@@ -117,6 +133,22 @@ export default function AddRentModal(props: AddRentModalProps) {
                 Аренда оборудования
               </ModalHeader>
               <ModalBody>
+                <Controller
+                  control={control}
+                  name='title'
+                  rules={{
+                    required: 'Укажите название',
+                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <Input
+                      type="text"
+                      label="Название"
+                      errorMessage={errors.title?.message}
+                      onChange={onChange}
+                      value={value}
+                    />
+                  )}
+                />
                 <div className="flex gap-3">
                   <Controller
                     control={control}
