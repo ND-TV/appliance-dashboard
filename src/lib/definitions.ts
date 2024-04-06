@@ -1,4 +1,7 @@
 export const enum ApplianceCategory {
+  /* Unspecified category. */
+  /* eslint-disable no-unused-vars */
+  NOT_SET = 'not_set',
   /* eslint-disable no-unused-vars */
   CATEGORY_1 = 'category_1',
   /* eslint-disable no-unused-vars */
@@ -6,7 +9,7 @@ export const enum ApplianceCategory {
 }
 
 export interface Appliance {
-  id: number,
+  id: string,
   /* Appliance name. */
   title: string,
   /* Number of days appliance was in use. */
@@ -17,4 +20,12 @@ export interface Appliance {
   dayRent: number,
   /* Appliance Category. */
   category: ApplianceCategory,
+}
+
+export interface Agreement {
+  id: string,
+  title: string,
+  appliances: Appliance[],
+  startDate: string,
+  endDate: string,
 }
