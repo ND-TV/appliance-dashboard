@@ -1,7 +1,15 @@
+import React from 'react';
 import {Appliance} from '@/lib/definitions';
+import {Chip} from '@nextui-org/react';
 
-export default function ApplianceDraggable(props: Appliance) {
+export default function ApplianceItem(props: Appliance) {
   return (
-    <template>{JSON.stringify(props)}</template>
+    <Chip
+      className="fc-event"
+      color="default"
+      variant="light"
+    >
+      {props.title}
+    </Chip>
   );
 }

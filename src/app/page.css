@@ -31,18 +31,16 @@
 }
 
 #calendar .appliance-list {
-  display: block;
-
   border: 1px solid lightgray;
   border-radius: 8px;
 }
 
 @media (max-width: 1024px) {
   #calendar {
-    grid-template-areas: "calendar";
+    grid-template-columns: 1fr;
   }
 
-  #calendar .appliance-list {
+  #calendar .appliances {
     display: none;
   }
 }

@@ -1,4 +1,5 @@
-import ApplianceDraggable from '@/components/appliance_draggable';
+import {Listbox, ListboxItem} from '@nextui-org/react';
+import ApplianceItem from '@/components/appliance_draggable';
 import {Appliance} from '@/lib/definitions';
 
 interface ApplianceListProps {
@@ -6,21 +7,18 @@ interface ApplianceListProps {
 }
 
 export default function ApplianceList(props: ApplianceListProps) {
-  const renderAppliance = (appliance: Appliance, applianceIndex: number) => (
-    <li>
-      <ApplianceDraggable
-        key={`appliance-${applianceIndex}`}
-        {...appliance}
-      />
-    </li>
+  const renderAppliance = (appliance: Appliance) => (
+    <ListboxItem key={appliance.id}>
+      <ApplianceItem {...appliance} />
+    </ListboxItem>
   );
 
   return (
     <section className="appliances">
       <h1>Оборудование</h1>
-      <ul className="appliance-list">
+      <Listbox className="appliance-list" aria-label="Appliances">
         {props.appliances.map(renderAppliance)}
-      </ul>
+      </Listbox>
     </section>
   );
 }
